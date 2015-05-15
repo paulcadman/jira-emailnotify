@@ -7,8 +7,10 @@
 
   <component-import key="eventPublisher" interface="com.atlassian.event.api.EventPublisher"/>
   <component-import key="customFieldManager" interface="com.atlassian.jira.issue.CustomFieldManager"/>
-  <component key="eventListener" class="com.corefiling.jira.plugins.emailnotify.IssueUpdatedListener">
+  <component key="issue-eventListener" class="com.corefiling.jira.plugins.emailnotify.IssueUpdatedListener">
     <description>Class that processes the incoming JIRA issue events.</description>
-  </component> 
-
+  </component>
+    <component key="version-eventListener" class="com.corefiling.jira.plugins.emailnotify.VersionUpdatedListener">
+        <description>Class that processes the incoming JIRA version events.</description>
+    </component>
 </atlassian-plugin>
