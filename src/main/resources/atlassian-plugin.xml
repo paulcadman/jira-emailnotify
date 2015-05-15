@@ -1,0 +1,14 @@
+<atlassian-plugin key="${project.groupId}.${project.artifactId}" name="${project.name}" plugins-version="2">
+  <plugin-info>
+    <description>${project.description}</description>
+    <version>${project.version}</version>
+    <vendor name="CoreFiling" url="http://www.corefiling.com/" />
+  </plugin-info>
+
+  <component-import key="eventPublisher" interface="com.atlassian.event.api.EventPublisher"/>
+  <component-import key="customFieldManager" interface="com.atlassian.jira.issue.CustomFieldManager"/>
+  <component key="eventListener" class="com.corefiling.jira.plugins..emailnotify.IssueUpdatedListener">
+    <description>Class that processes the incoming JIRA issue events.</description>
+  </component> 
+
+</atlassian-plugin>
