@@ -6,4 +6,5 @@ package com.corefiling.jira.plugins.emailnotify.version.content;
 public interface VersionEmailContent {
   public String getSubject();
   public String getMessage();
+  public String getHeader();
 }

@@ -41,7 +41,8 @@ public class VersionEmail {
       LOG.info("sending email to: " + email);
       LOG.info("message: " + _delegate.getMessage());
       LOG.info("subject: " + _delegate.getSubject());
-      EmailQueuer.queueEmail(email, _delegate.getSubject(), _delegate.getMessage(), "version");
+      LOG.info("header: " + _delegate.getHeader());
+      EmailQueuer.queueEmail(email, _delegate.getSubject(), _delegate.getMessage(), _delegate.getHeader());
     }
   }
 }

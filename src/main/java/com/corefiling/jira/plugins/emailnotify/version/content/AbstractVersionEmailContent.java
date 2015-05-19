@@ -26,6 +26,10 @@ abstract class AbstractVersionEmailContent implements VersionEmailContent {
     return getVersion().getProjectObject();
   }
 
+  public String getHeader() {
+    return String.format("version %s", getEventType());
+  }
+
   public String getSubject() {
     return String.format("[JIRA] %s", getMessageStart());
   }
