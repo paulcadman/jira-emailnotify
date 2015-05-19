@@ -3,14 +3,32 @@
     <description>${project.description}</description>
     <version>${project.version}</version>
     <vendor name="CoreFiling" url="http://www.corefiling.com/" />
+    <param name="configure.url">/secure/admin/configureEmailNotifyPlugin.jspa</param>
   </plugin-info>
 
+  <component-import key="pluginSettingsFactory" interface="com.atlassian.sal.api.pluginsettings.PluginSettingsFactory"/>
   <component-import key="eventPublisher" interface="com.atlassian.event.api.EventPublisher"/>
   <component-import key="customFieldManager" interface="com.atlassian.jira.issue.CustomFieldManager"/>
+
+  <component key="emailNotifyPluginConfiguration" class="com.corefiling.jira.plugins.emailnotify.EmailNotifyPluginConfiguration"/>
+
   <component key="issue-eventListener" class="com.corefiling.jira.plugins.emailnotify.IssueUpdatedListener">
     <description>Class that processes the incoming JIRA issue events.</description>
   </component>
-    <component key="version-eventListener" class="com.corefiling.jira.plugins.emailnotify.VersionListener">
-        <description>Class that processes the incoming JIRA version events.</description>
-    </component>
+  <component key="version-eventListener" class="com.corefiling.jira.plugins.emailnotify.version.VersionListener">
+    <description>Class that processes the incoming JIRA version events.</description>
+  </component>
+
+  <webwork1 key="email-notify-config"
+            name="email-notify Configuration"
+            class="java.lang.Object">
+    <actions>
+      <action name="com.corefiling.jira.plugins.emailnotify.EmailNotifyWebConfig"
+              alias="configureEmailNotifyPlugin"
+              roles-required="sysadmin">
+        <view name="input">templates/emailnotify-config.vm</view>
+        <view name="success">templates/emailnotify-config.vm</view>
+      </action>
+    </actions>
+  </webwork1>
 </atlassian-plugin>

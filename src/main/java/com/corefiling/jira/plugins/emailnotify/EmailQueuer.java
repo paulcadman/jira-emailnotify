@@ -10,13 +10,14 @@ import com.atlassian.mail.server.SMTPMailServer;
  *  Submit an email to JIRA's Email queue.
  */
 public class EmailQueuer {
-  public static void queueEmail(final String to, final String subject, final String body) {
+  public static void queueEmail(final String to, final String subject, final String body, final String reason) {
     final SMTPMailServer mailServer = MailFactory.getServerManager().getDefaultSMTPMailServer();
     final Email email = new Email(to);
     email.setFrom(mailServer.getDefaultFrom());
     email.setSubject(subject);
-    email.setMimeType("text/html");
+    email.setMimeType("text/plain");
     email.setBody(body);
+    email.addHeader("X-JIRA-emailnotify-reason", reason);
     ComponentAccessor.getMailQueue().addItem(new SingleMailQueueItem(email));
   }
 }

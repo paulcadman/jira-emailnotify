@@ -6,7 +6,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.corefiling.jira.plugins</groupId>
-    <artifactId>email-notify</artifactId>
+    <artifactId>emailnotify</artifactId>
 	<version>1.0</version>
 
     <organization>
@@ -21,9 +21,17 @@
     <dependencies>
         <dependency>
             <groupId>com.atlassian.jira</groupId>
-            <artifactId>jira-core</artifactId>
+            <artifactId>jira-api</artifactId>
             <version>${jira.version}</version>
             <scope>provided</scope>
+          </dependency>
+
+        <!--required for springframework classes/namespace in VersionListener-->
+        <dependency>
+          <groupId>com.atlassian.jira</groupId>
+          <artifactId>jira-core</artifactId>
+          <version>${jira.version}</version>
+          <scope>provided</scope>
         </dependency>
     </dependencies>
 

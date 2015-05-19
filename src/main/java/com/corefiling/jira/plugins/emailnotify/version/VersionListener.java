@@ -1,10 +1,17 @@
-package com.corefiling.jira.plugins.emailnotify;
+package com.corefiling.jira.plugins.emailnotify.version;
 
 import com.atlassian.event.api.EventListener;
 import com.atlassian.event.api.EventPublisher;
+import com.atlassian.jira.component.ComponentAccessor;
+import com.atlassian.jira.config.properties.APKeys;
+import com.atlassian.jira.event.project.AbstractVersionEvent;
 import com.atlassian.jira.event.project.VersionCreateEvent;
 import com.atlassian.jira.event.project.VersionDeleteEvent;
 import com.atlassian.jira.event.project.VersionUpdatedEvent;
+import com.atlassian.jira.project.Project;
+import com.atlassian.jira.project.version.Version;
+import com.corefiling.jira.plugins.emailnotify.EmailNotifyPluginConfiguration;
+import com.corefiling.jira.plugins.emailnotify.EmailQueuer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
@@ -17,13 +24,15 @@ import org.springframework.beans.factory.InitializingBean;
 public class VersionListener implements InitializingBean, DisposableBean {
   private static final Logger LOG = LoggerFactory.getLogger("atlassian.plugin");
   private final EventPublisher _eventPublisher;
+  private final EmailNotifyPluginConfiguration _pluginSettings;
 
   /**
    * Constructor.
    * @param eventPublisher injected {@code EventPublisher} implementation.
    */
-  public VersionListener(final EventPublisher eventPublisher) {
+  public VersionListener(final EventPublisher eventPublisher, final EmailNotifyPluginConfiguration pluginSettings) {
     _eventPublisher = eventPublisher;
+    _pluginSettings = pluginSettings;
   }
 
   /**
@@ -52,9 +61,9 @@ public class VersionListener implements InitializingBean, DisposableBean {
    */
   @EventListener
   public void onVersionUpdatedEvent(final VersionUpdatedEvent versionEvent) {
-    final String versionName = versionEvent.getVersion().getName();
-    LOG.info("UPDATE event for version {}", versionName);
-    EmailQueuer.queueEmail("pwc@corefiling.com", "test", "UPDATE event for version" + versionName);
+    if (_pluginSettings.getNotifyVersionChanges()) {
+      new VersionEmail(versionEvent, _pluginSettings.getNotifyVersionEmailsList()).send();
+    }
   }
 
   /**
@@ -63,9 +72,9 @@ public class VersionListener implements InitializingBean, DisposableBean {
    */
   @EventListener
   public void onVersionCreateEvent(final VersionCreateEvent versionEvent) {
-    final String versionName = versionEvent.getVersion().getName();
-    LOG.info("CREATE event for version {}", versionName);
-    EmailQueuer.queueEmail("pwc@corefiling.com", "test", "CREATE event for version" + versionName);
+    if (_pluginSettings.getNotifyVersionChanges()) {
+      new VersionEmail(versionEvent, _pluginSettings.getNotifyVersionEmailsList()).send();
+    }
   }
 
   /**
@@ -74,8 +83,8 @@ public class VersionListener implements InitializingBean, DisposableBean {
    */
   @EventListener
   public void onVersionDeleteEvent(final VersionDeleteEvent versionEvent) {
-    final String versionName = versionEvent.getVersion().getName();
-    LOG.info("DELETE event for version {}", versionName);
-    EmailQueuer.queueEmail("pwc@corefiling.com", "test", "DELETE event for version" + versionName);
+    if (_pluginSettings.getNotifyVersionChanges()) {
+      new VersionEmail(versionEvent, _pluginSettings.getNotifyVersionEmailsList()).send();
+    }
   }
 }
