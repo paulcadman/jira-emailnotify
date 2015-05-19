@@ -17,6 +17,8 @@ public class EmailNotifyPluginConfiguration {
   private static final String BOOLEAN_TRUE = "__emailnotify_bool_y";
 
   private static final String BOOLEAN_FALSE = "__emailnotigy_bool_n";
+  private static final String TRIAGE_IN_SPRINT_EMAILS_KEY = "triageInSprintEmails";
+  private static final String TRIAGE_IN_SPRINT_KEY = "triageInSprint";
 
   private final PluginSettings _settings;
 
@@ -51,6 +53,38 @@ public class EmailNotifyPluginConfiguration {
   public Collection<String> getNotifyVersionEmailsList() {
     final Collection<String> out = Lists.newArrayList();
     for (String email : getNotifyVersionEmails().split(",")) {
+      out.add(email.trim());
+    }
+    return out;
+  }
+
+  public void setNotifyTriageInSprintEmails(String inputField) {
+    _settings.put(TRIAGE_IN_SPRINT_EMAILS_KEY, inputField);
+  }
+
+  public void setNotifyTriageInSprint(boolean triageInSprint) {
+    _settings.put(TRIAGE_IN_SPRINT_KEY, triageInSprint ? BOOLEAN_TRUE : BOOLEAN_FALSE);
+  }
+
+  public boolean getNotifyTriageInSprint() {
+    Object out = _settings.get(TRIAGE_IN_SPRINT_KEY);
+
+    return out == null || out.equals(BOOLEAN_TRUE);
+  }
+
+  public String getNotifyTriageInSprintEmails() {
+    Object emails = _settings.get(TRIAGE_IN_SPRINT_EMAILS_KEY);
+    if (emails != null) {
+      return (String) emails;
+    }
+    else {
+      return "";
+    }
+  }
+
+  public Collection<String> getNotifyTriageInSprintEmailsList() {
+    final Collection<String> out = Lists.newArrayList();
+    for (String email : getNotifyTriageInSprintEmails().split(",")) {
       out.add(email.trim());
     }
     return out;

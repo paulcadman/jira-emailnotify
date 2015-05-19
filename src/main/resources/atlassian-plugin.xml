@@ -12,7 +12,7 @@
 
   <component key="emailNotifyPluginConfiguration" class="com.corefiling.jira.plugins.emailnotify.EmailNotifyPluginConfiguration"/>
 
-  <component key="issue-eventListener" class="com.corefiling.jira.plugins.emailnotify.IssueUpdatedListener">
+  <component key="issue-eventListener" class="com.corefiling.jira.plugins.emailnotify.issue.IssueListener">
     <description>Class that processes the incoming JIRA issue events.</description>
   </component>
   <component key="version-eventListener" class="com.corefiling.jira.plugins.emailnotify.version.VersionListener">

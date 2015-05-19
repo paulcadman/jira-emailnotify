@@ -1,16 +1,15 @@
 package com.corefiling.jira.plugins.emailnotify.version.content;
 
-import com.atlassian.jira.component.ComponentAccessor;
-import com.atlassian.jira.config.properties.APKeys;
 import com.atlassian.jira.event.project.AbstractVersionEvent;
 import com.atlassian.jira.project.Project;
 import com.atlassian.jira.project.version.Version;
-import com.corefiling.jira.plugins.emailnotify.email.EmailContent;
+import com.corefiling.jira.plugins.emailnotify.email.AbstractEmailContent;
+
 
 /**
  * Created by pwc on 19/05/15.
  */
-abstract class AbstractVersionEmailContent implements EmailContent {
+abstract class AbstractVersionEmailContent extends AbstractEmailContent {
   private final AbstractVersionEvent _event;
 
   public AbstractVersionEmailContent(final AbstractVersionEvent event) {
@@ -37,10 +36,6 @@ abstract class AbstractVersionEmailContent implements EmailContent {
 
   protected String getMessageStart() {
     return String.format("Version %s in project %s has been %s.", getVersion().getName(), getProject().getKey(), getEventType());
-  }
-
-  protected String getBaseUrl() {
-    return ComponentAccessor.getApplicationProperties().getString(APKeys.JIRA_BASEURL);
   }
 
   protected String getProjectVersionUrl() {
