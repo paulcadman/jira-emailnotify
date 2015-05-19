@@ -1,4 +1,4 @@
-package com.corefiling.jira.plugins.emailnotify;
+package com.corefiling.jira.plugins.emailnotify.util;
 
 import com.atlassian.jira.component.ComponentAccessor;
 import com.atlassian.mail.Email;

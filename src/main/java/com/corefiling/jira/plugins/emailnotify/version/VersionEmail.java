@@ -3,7 +3,7 @@ package com.corefiling.jira.plugins.emailnotify.version;
 import com.atlassian.jira.event.project.VersionCreateEvent;
 import com.atlassian.jira.event.project.VersionDeleteEvent;
 import com.atlassian.jira.event.project.VersionUpdatedEvent;
-import com.corefiling.jira.plugins.emailnotify.EmailQueuer;
+import com.corefiling.jira.plugins.emailnotify.util.EmailQueuer;
 import com.corefiling.jira.plugins.emailnotify.version.content.VersionEmailContent;
 import com.corefiling.jira.plugins.emailnotify.version.content.VersionCreateEmailContent;
 import com.corefiling.jira.plugins.emailnotify.version.content.VersionDeleteEmailContent;
