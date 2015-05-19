@@ -8,12 +8,7 @@ import com.atlassian.jira.event.project.AbstractVersionEvent;
 import com.atlassian.jira.event.project.VersionCreateEvent;
 import com.atlassian.jira.event.project.VersionDeleteEvent;
 import com.atlassian.jira.event.project.VersionUpdatedEvent;
-import com.atlassian.jira.project.Project;
-import com.atlassian.jira.project.version.Version;
 import com.corefiling.jira.plugins.emailnotify.EmailNotifyPluginConfiguration;
-import com.corefiling.jira.plugins.emailnotify.EmailQueuer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -22,7 +17,6 @@ import org.springframework.beans.factory.InitializingBean;
  * Created by pwc on 15/05/15.
  */
 public class VersionListener implements InitializingBean, DisposableBean {
-  private static final Logger LOG = LoggerFactory.getLogger("atlassian.plugin");
   private final EventPublisher _eventPublisher;
   private final EmailNotifyPluginConfiguration _pluginSettings;
 

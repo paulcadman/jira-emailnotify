@@ -38,10 +38,10 @@ public class VersionEmail {
 
   public void send() {
     for (String email : _emails) {
-      LOG.info("sending email to: " + email);
-      LOG.info("message: " + _delegate.getMessage());
-      LOG.info("subject: " + _delegate.getSubject());
-      LOG.info("header: " + _delegate.getHeader());
+      LOG.debug("sending email to: " + email);
+      LOG.debug("message: " + _delegate.getMessage());
+      LOG.debug("subject: " + _delegate.getSubject());
+      LOG.debug("header: " + _delegate.getHeader());
       EmailQueuer.queueEmail(email, _delegate.getSubject(), _delegate.getMessage(), _delegate.getHeader());
     }
   }
