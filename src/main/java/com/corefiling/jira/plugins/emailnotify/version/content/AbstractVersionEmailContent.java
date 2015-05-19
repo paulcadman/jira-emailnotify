@@ -5,11 +5,12 @@ import com.atlassian.jira.config.properties.APKeys;
 import com.atlassian.jira.event.project.AbstractVersionEvent;
 import com.atlassian.jira.project.Project;
 import com.atlassian.jira.project.version.Version;
+import com.corefiling.jira.plugins.emailnotify.email.EmailContent;
 
 /**
  * Created by pwc on 19/05/15.
  */
-abstract class AbstractVersionEmailContent implements VersionEmailContent {
+abstract class AbstractVersionEmailContent implements EmailContent {
   private final AbstractVersionEvent _event;
 
   public AbstractVersionEmailContent(final AbstractVersionEvent event) {
@@ -50,7 +51,7 @@ abstract class AbstractVersionEmailContent implements VersionEmailContent {
     return String.format("Visit %s for more details.", getProjectVersionUrl());
   }
 
-  public String getMessage() {
+  public String getBody() {
     return String.format("%s\n%s", getMessageStart(), getMessageEnd());
   }
 }
