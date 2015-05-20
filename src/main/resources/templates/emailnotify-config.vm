@@ -24,12 +24,12 @@
                   <td class="fieldValueArea">
                     <input type="checkbox"
                            name="versionChanges"
-                    #if($notifyingVersionChanges)checked="checked"#end
+                    #if($versionEnabled)checked="checked"#end
                     />
                     <div class="fieldDescription">Notify changes to versions</div>
                   </td>
                   <td class="fieldValueArea">
-                    <input type="text" name="versionChangesEmails" value="$versionChangesEmails"/>
+                    <input type="text" name="versionChangesEmails" value="$versionRecipients"/>
                     <div class="fieldDescription">A comma delimited list of emails to notify</div>
                   </td>
                 </tr>
@@ -37,13 +37,17 @@
                   <td class="fieldLabelArea">Issue Change Notifications</td>
                   <td class="fieldValueArea">
                     <input type="checkbox"
-                           name="triageInSprint"
-                    #if($notifyingTriageInSprint)checked="checked"#end
+                           name="issueUpdated"
+                    #if($issueEnabled)checked="checked"#end
                     />
-                    <div class="fieldDescription">Notify when Issues in the TRIAGE state are added to sprints</div>
+                    <div class="fieldDescription">Notify when a condition is met</div>
                   </td>
                   <td class="fieldValueArea">
-                    <input type="text" name="triageInSprintEmails" value="$triageInSprintEmails"/>
+                    <textarea name="updateCondition" style="height: 200px; width:100%">$textutils.htmlEncode($updateCondition)</textarea>
+                    <div class="fieldDescription">A groovy script condition. The updated <code>issue</code> and <code>changes<code></code> (a map of changed fieldNames to field value changes) are supplied in the binding</code></div>
+                  </td>
+                  <td class="fieldValueArea">
+                    <input type="text" name="issueRecipients" value="$updateRecipients"/>
                     <div class="fieldDescription">A comma delimited list of emails to notify (in addition to the user that updated the issue)</div>
                   </td>
                 </tr>

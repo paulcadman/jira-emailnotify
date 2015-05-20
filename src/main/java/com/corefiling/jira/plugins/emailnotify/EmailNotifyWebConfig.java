@@ -1,6 +1,9 @@
 package com.corefiling.jira.plugins.emailnotify;
 
 import com.atlassian.jira.web.action.JiraWebActionSupport;
+import com.corefiling.jira.plugins.emailnotify.components.issue.conf.IssueSettings;
+import com.corefiling.jira.plugins.emailnotify.components.version.conf.VersionSettings;
+import com.corefiling.jira.plugins.emailnotify.conf.EmailNotifyPluginConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import webwork.action.ActionContext;
@@ -12,12 +15,17 @@ import java.util.Map;
  */
 public class EmailNotifyWebConfig extends JiraWebActionSupport {
   private final EmailNotifyPluginConfiguration _settings;
+  private final VersionSettings _versionSettings;
+  private final IssueSettings _issueSettings;
+
   private static final String VERSION_EMAIL_KEY = "versionChangesEmails";
-  private static final String TRIAGE_IN_SPRINT_EMAIL_KEY = "triageInSprintEmails";
-  private static final Logger LOG = LoggerFactory.getLogger("atlassian.plugin");
+  private static final String ISSUE_UPDATE_EMAIL_KEY = "issueRecipients";
+  private static final String CONDITION_KEY = "updateCondition";
 
   public EmailNotifyWebConfig(final EmailNotifyPluginConfiguration settings) {
     _settings = settings;
+    _versionSettings = _settings.getVersionSettings();
+    _issueSettings = _settings.getIssueSettings();
   }
 
 
@@ -51,33 +59,37 @@ public class EmailNotifyWebConfig extends JiraWebActionSupport {
     Map params = ctx.getParametersImpl();
 
     // Version changes
-    _settings.setNotifyVersionChanges(getParams().containsKey("versionChanges"));
-    _settings.setNotifyVersionEmails(getInputField(VERSION_EMAIL_KEY));
+    _versionSettings.setEnabled(getParams().containsKey("versionChanges"));
+    _versionSettings.setRecipients((getInputField(VERSION_EMAIL_KEY)));
 
-    // triage in sprint
-    _settings.setNotifyTriageInSprint(getParams().containsKey("triageInSprint"));
-    _settings.setNotifyTriageInSprintEmails(getInputField(TRIAGE_IN_SPRINT_EMAIL_KEY));
+    // Issue update
+    _issueSettings.setEnabled(getParams().containsKey("issueUpdated"));
+    _issueSettings.setRecipients(getInputField(ISSUE_UPDATE_EMAIL_KEY));
+    _issueSettings.setCondition(getInputField(CONDITION_KEY));
 
     return SUCCESS;
   }
 
   // template parameters
   // version changes
-  public boolean isNotifyingVersionChanges() {
-    return _settings.getNotifyVersionChanges();
+  public boolean isVersionEnabled() {
+    return _versionSettings.isEnabled();
   }
 
-  public String versionChangesEmails() {
-    return _settings.getNotifyVersionEmails();
+  public boolean isIssueEnabled() {
+    return _issueSettings.isEnabled();
   }
 
-  // triage in sprint
-  public boolean isNotifyingTriageInSprint() {
-    return _settings.getNotifyTriageInSprint();
+  public String versionRecipients() {
+    return _versionSettings.getRecipients();
   }
 
-  public String triageInSprintEmails() {
-    return _settings.getNotifyTriageInSprintEmails();
+  public String updateRecipients() {
+    return _issueSettings.getRecipients();
+  }
+
+  public String updateCondition() {
+    return _issueSettings.getCondition();
   }
 
   private static final long serialVersionUID = 1L;

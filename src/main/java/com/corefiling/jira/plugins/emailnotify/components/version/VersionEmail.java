@@ -1,13 +1,13 @@
-package com.corefiling.jira.plugins.emailnotify.version;
+package com.corefiling.jira.plugins.emailnotify.components.version;
 
 import com.atlassian.jira.event.project.VersionCreateEvent;
 import com.atlassian.jira.event.project.VersionDeleteEvent;
 import com.atlassian.jira.event.project.VersionUpdatedEvent;
 import com.corefiling.jira.plugins.emailnotify.util.EmailQueuer;
 import com.corefiling.jira.plugins.emailnotify.email.EmailContent;
-import com.corefiling.jira.plugins.emailnotify.version.content.VersionCreateEmailContent;
-import com.corefiling.jira.plugins.emailnotify.version.content.VersionDeleteEmailContent;
-import com.corefiling.jira.plugins.emailnotify.version.content.VersionUpdateEmailContent;
+import com.corefiling.jira.plugins.emailnotify.components.version.content.VersionCreateEmailContent;
+import com.corefiling.jira.plugins.emailnotify.components.version.content.VersionDeleteEmailContent;
+import com.corefiling.jira.plugins.emailnotify.components.version.content.VersionUpdateEmailContent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

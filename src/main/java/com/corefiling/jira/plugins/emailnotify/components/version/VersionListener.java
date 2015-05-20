@@ -1,14 +1,12 @@
-package com.corefiling.jira.plugins.emailnotify.version;
+package com.corefiling.jira.plugins.emailnotify.components.version;
 
 import com.atlassian.event.api.EventListener;
 import com.atlassian.event.api.EventPublisher;
-import com.atlassian.jira.component.ComponentAccessor;
-import com.atlassian.jira.config.properties.APKeys;
-import com.atlassian.jira.event.project.AbstractVersionEvent;
 import com.atlassian.jira.event.project.VersionCreateEvent;
 import com.atlassian.jira.event.project.VersionDeleteEvent;
 import com.atlassian.jira.event.project.VersionUpdatedEvent;
-import com.corefiling.jira.plugins.emailnotify.EmailNotifyPluginConfiguration;
+import com.corefiling.jira.plugins.emailnotify.components.version.conf.VersionSettings;
+import com.corefiling.jira.plugins.emailnotify.conf.EmailNotifyPluginConfiguration;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -18,7 +16,7 @@ import org.springframework.beans.factory.InitializingBean;
  */
 public class VersionListener implements InitializingBean, DisposableBean {
   private final EventPublisher _eventPublisher;
-  private final EmailNotifyPluginConfiguration _pluginSettings;
+  private final VersionSettings _pluginSettings;
 
   /**
    * Constructor.
@@ -26,7 +24,7 @@ public class VersionListener implements InitializingBean, DisposableBean {
    */
   public VersionListener(final EventPublisher eventPublisher, final EmailNotifyPluginConfiguration pluginSettings) {
     _eventPublisher = eventPublisher;
-    _pluginSettings = pluginSettings;
+    _pluginSettings = pluginSettings.getVersionSettings();
   }
 
   /**
@@ -55,8 +53,8 @@ public class VersionListener implements InitializingBean, DisposableBean {
    */
   @EventListener
   public void onVersionUpdatedEvent(final VersionUpdatedEvent versionEvent) {
-    if (_pluginSettings.getNotifyVersionChanges()) {
-      new VersionEmail(versionEvent, _pluginSettings.getNotifyVersionEmailsList()).send();
+    if (_pluginSettings.isEnabled()) {
+      new VersionEmail(versionEvent, _pluginSettings.getRecipientsList()).send();
     }
   }
 
@@ -66,8 +64,8 @@ public class VersionListener implements InitializingBean, DisposableBean {
    */
   @EventListener
   public void onVersionCreateEvent(final VersionCreateEvent versionEvent) {
-    if (_pluginSettings.getNotifyVersionChanges()) {
-      new VersionEmail(versionEvent, _pluginSettings.getNotifyVersionEmailsList()).send();
+    if (_pluginSettings.isEnabled()) {
+      new VersionEmail(versionEvent, _pluginSettings.getRecipientsList()).send();
     }
   }
 
@@ -77,8 +75,8 @@ public class VersionListener implements InitializingBean, DisposableBean {
    */
   @EventListener
   public void onVersionDeleteEvent(final VersionDeleteEvent versionEvent) {
-    if (_pluginSettings.getNotifyVersionChanges()) {
-      new VersionEmail(versionEvent, _pluginSettings.getNotifyVersionEmailsList()).send();
+    if (_pluginSettings.isEnabled()) {
+      new VersionEmail(versionEvent, _pluginSettings.getRecipientsList()).send();
     }
   }
 }

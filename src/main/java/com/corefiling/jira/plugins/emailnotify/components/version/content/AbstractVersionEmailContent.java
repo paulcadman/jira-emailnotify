@@ -1,4 +1,4 @@
-package com.corefiling.jira.plugins.emailnotify.version.content;
+package com.corefiling.jira.plugins.emailnotify.components.version.content;
 
 import com.atlassian.jira.event.project.AbstractVersionEvent;
 import com.atlassian.jira.project.Project;
@@ -9,7 +9,7 @@ import com.corefiling.jira.plugins.emailnotify.email.AbstractEmailContent;
 /**
  * Created by pwc on 19/05/15.
  */
-abstract class AbstractVersionEmailContent extends AbstractEmailContent {
+public abstract class AbstractVersionEmailContent extends AbstractEmailContent {
   private final AbstractVersionEvent _event;
 
   public AbstractVersionEmailContent(final AbstractVersionEvent event) {
@@ -18,7 +18,7 @@ abstract class AbstractVersionEmailContent extends AbstractEmailContent {
 
   protected abstract String getEventType();
 
-  private Version getVersion() {
+  protected Version getVersion() {
     return _event.getVersion();
   }
 
@@ -31,7 +31,7 @@ abstract class AbstractVersionEmailContent extends AbstractEmailContent {
   }
 
   public String getSubject() {
-    return String.format("[JIRA] %s", getMessageStart());
+    return getMessageStart();
   }
 
   protected String getMessageStart() {

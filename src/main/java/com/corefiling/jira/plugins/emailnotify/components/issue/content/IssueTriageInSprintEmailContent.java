@@ -1,4 +1,4 @@
-package com.corefiling.jira.plugins.emailnotify.issue.content;
+package com.corefiling.jira.plugins.emailnotify.components.issue.content;
 
 import com.atlassian.jira.event.issue.IssueEvent;
 import com.atlassian.jira.issue.Issue;
@@ -26,7 +26,7 @@ public class IssueTriageInSprintEmailContent extends AbstractEmailContent {
 
   @Override
   public String getSubject() {
-    return String.format("[JIRA] Triage issue %s has been added to a sprint", getIssue().getKey());
+    return String.format("Triage issue %s has been added to a sprint", getIssue().getKey());
   }
 
   @Override

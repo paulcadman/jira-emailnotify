@@ -1,4 +1,4 @@
-package com.corefiling.jira.plugins.emailnotify.version.content;
+package com.corefiling.jira.plugins.emailnotify.components.version.content;
 
 import com.atlassian.jira.event.project.VersionDeleteEvent;
 
