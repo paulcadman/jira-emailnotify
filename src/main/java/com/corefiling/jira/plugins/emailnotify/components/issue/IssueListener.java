@@ -5,14 +5,12 @@ import com.atlassian.event.api.EventPublisher;
 import com.atlassian.jira.event.issue.IssueEvent;
 import com.atlassian.jira.event.type.EventType;
 import com.atlassian.jira.issue.CustomFieldManager;
-import com.atlassian.jira.issue.Issue;
 
 import com.corefiling.jira.plugins.emailnotify.conf.EmailNotifyPluginConfiguration;
 import com.corefiling.jira.plugins.emailnotify.components.issue.conf.IssueSettings;
 import com.corefiling.jira.plugins.emailnotify.email.EmailContent;
-import com.corefiling.jira.plugins.emailnotify.components.issue.content.IssueTriageInSprintEmailContent;
+import com.corefiling.jira.plugins.emailnotify.components.issue.content.IssueEmailContent;
 import com.corefiling.jira.plugins.emailnotify.util.EmailQueuer;
-import com.google.common.base.Optional;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 import org.slf4j.Logger;
@@ -60,11 +58,6 @@ public class IssueListener implements InitializingBean, DisposableBean {
     _eventPublisher.unregister(this);
   }
 
-  private boolean isAddedToSprint(final IssueEvent issueEvent) {
-    Optional<String> sprintChange = IssueChanges.getFieldChange(issueEvent, "Sprint");
-    return sprintChange.isPresent() && !sprintChange.get().equals("");
-  }
-
   private boolean evaluateCondition(final IssueEvent event) {
     Binding binding = new Binding();
     GroovyShell shell = new GroovyShell(binding);
@@ -88,14 +81,11 @@ public class IssueListener implements InitializingBean, DisposableBean {
   @EventListener
   public void onIssueEvent(final IssueEvent issueEvent) {
     final Long eventTypeId = issueEvent.getEventTypeId();
-    final Issue issue = issueEvent.getIssue();
-    final Optional<String> sprintChange = IssueChanges.getFieldChange(issueEvent, "Sprint");
 
     if (_pluginSettings.isEnabled()
             && eventTypeId.equals(EventType.ISSUE_UPDATED_ID)
-            && issue.getStatusObject().getName().equals("Triage")
-            && (sprintChange.isPresent() && !sprintChange.get().equals(""))) {
-      EmailContent emailContent = new IssueTriageInSprintEmailContent(issueEvent, sprintChange.get());
+            && evaluateCondition(issueEvent)) {
+      EmailContent emailContent = new IssueEmailContent(issueEvent, _pluginSettings.getSubject(), _pluginSettings.getMessage());
       EmailQueuer.queueEmail(issueEvent.getUser().getEmailAddress(), emailContent);
       for (String address : _pluginSettings.getRecipientsList()) {
         EmailQueuer.queueEmail(address, emailContent);

@@ -29,7 +29,7 @@
                     <div class="fieldDescription">Notify changes to versions</div>
                   </td>
                   <td class="fieldValueArea">
-                    <input type="text" name="versionChangesEmails" value="$versionRecipients"/>
+                    <input type="text" style="width:100%" name="versionChangesEmails" value="$versionRecipients"/>
                     <div class="fieldDescription">A comma delimited list of emails to notify</div>
                   </td>
                 </tr>
@@ -44,11 +44,23 @@
                   </td>
                   <td class="fieldValueArea">
                     <textarea name="updateCondition" style="height: 200px; width:100%">$textutils.htmlEncode($updateCondition)</textarea>
-                    <div class="fieldDescription">A groovy script condition. The updated <code>issue</code> and <code>changes<code></code> (a map of changed fieldNames to field value changes) are supplied in the binding</code></div>
+                    <div class="fieldDescription">A groovy script condition. The updated <code>issue</code> and <code>changes</code> (a map of changed fieldNames to field value changes) are supplied in the binding.</div>
                   </td>
                   <td class="fieldValueArea">
-                    <input type="text" name="issueRecipients" value="$updateRecipients"/>
+                    <input type="text" style="width:100%" name="issueRecipients" value="$updateRecipients"/>
                     <div class="fieldDescription">A comma delimited list of emails to notify (in addition to the user that updated the issue)</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td class="fieldValueArea">
+                    <textarea name="updateMessage" style="height: 200px; width:100%">$textutils.htmlEncode($updateMessage)</textarea>
+                    <div class="fieldDescription">A groovy expression that should return a <code>GString</code> containing a notification message. The updated <code>issue</code> and <code>changes</code> (a map of changed fieldNames to field value changes) are supplied in the binding.</div>
+                  </td>
+                  <td class="fieldValueArea">
+                    <input type="text" style="width:100%" name="updateSubject" value="$updateSubject"/>
+                    <div class="fieldDescription">A groovy expression that should return a <code>GString</code> containing an email subject.</div>
                   </td>
                 </tr>
                 <tr>

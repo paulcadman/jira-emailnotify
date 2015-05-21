@@ -21,6 +21,8 @@ public class EmailNotifyWebConfig extends JiraWebActionSupport {
   private static final String VERSION_EMAIL_KEY = "versionChangesEmails";
   private static final String ISSUE_UPDATE_EMAIL_KEY = "issueRecipients";
   private static final String CONDITION_KEY = "updateCondition";
+  private static final String ISSUE_MESSAGE_KEY = "updateMessage";
+  private static final String ISSUE_SUBJECT_KEY = "updateSubject";
 
   public EmailNotifyWebConfig(final EmailNotifyPluginConfiguration settings) {
     _settings = settings;
@@ -66,6 +68,8 @@ public class EmailNotifyWebConfig extends JiraWebActionSupport {
     _issueSettings.setEnabled(getParams().containsKey("issueUpdated"));
     _issueSettings.setRecipients(getInputField(ISSUE_UPDATE_EMAIL_KEY));
     _issueSettings.setCondition(getInputField(CONDITION_KEY));
+    _issueSettings.setMessage(getInputField(ISSUE_MESSAGE_KEY));
+    _issueSettings.setSubject(getInputField(ISSUE_SUBJECT_KEY));
 
     return SUCCESS;
   }
@@ -90,6 +94,14 @@ public class EmailNotifyWebConfig extends JiraWebActionSupport {
 
   public String updateCondition() {
     return _issueSettings.getCondition();
+  }
+
+  public String updateMessage() {
+    return _issueSettings.getMessage();
+  }
+
+  public String updateSubject() {
+    return _issueSettings.getSubject();
   }
 
   private static final long serialVersionUID = 1L;

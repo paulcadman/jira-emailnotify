@@ -13,6 +13,8 @@ public class IssueSettings {
   private static final String ISSUE_ENABLED_KEY = "issueUpdate" ;
   private static final String ISSUE_CONDITION = "issueCondition";
   private static final String ISSUE_EMAILS_KEY = "issueEmails";
+  private static final String ISSUE_MESSAGE_KEY = "issueMessage";
+  private static final String ISSUE_SUBJECT_KEY = "issueSubject";
 
   private final PluginSettings _settings;
 
@@ -64,5 +66,33 @@ public class IssueSettings {
       out.add(email.trim());
     }
     return out;
+  }
+
+  public String getMessage() {
+    Object message = _settings.get(ISSUE_MESSAGE_KEY);
+    if (message != null) {
+      return (String) message;
+    }
+    else {
+      return "";
+    }
+  }
+
+  public void setMessage(final String message) {
+    _settings.put(ISSUE_MESSAGE_KEY, message);
+  }
+
+  public String getSubject() {
+    Object subject = _settings.get(ISSUE_SUBJECT_KEY);
+    if (subject != null) {
+      return (String) subject;
+    }
+    else {
+      return "";
+    }
+  }
+
+  public void setSubject(String inputField) {
+    _settings.put(ISSUE_SUBJECT_KEY, inputField);
   }
 }
