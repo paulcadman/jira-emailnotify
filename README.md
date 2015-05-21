@@ -4,6 +4,12 @@ This plugin adds email notifications for JIRA events.
 
 ## Email notifications of create/update/delete for project versions.
 
+An email notification is set to recipients whenever a project email is
+created, updated, or deleted. The email contains a link to the project
+version page in JIRA.
+
+The notification for updates contains information on the values that have changed.
+
 ## Email notifications of updates to issues to the user that made the update.
 
 A condition may be specified as a boolean groovy expression in the plugin configuration.
