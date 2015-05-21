@@ -7,11 +7,11 @@ import com.corefiling.jira.plugins.emailnotify.email.AbstractEmailContent;
 /**
  * Created by pwc on 19/05/15.
  */
-public class IssueTriageInSprintEmailContent extends AbstractEmailContent {
+public class IssueEmailContent extends AbstractEmailContent {
   private final IssueEvent _issueEvent;
   private final String _sprintName;
 
-  public IssueTriageInSprintEmailContent(final IssueEvent issueEvent, final String sprintName) {
+  public IssueEmailContent(final IssueEvent issueEvent, final String sprintName) {
     _issueEvent = issueEvent;
     _sprintName = sprintName;
   }
