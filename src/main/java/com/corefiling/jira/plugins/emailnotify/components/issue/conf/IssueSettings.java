@@ -63,7 +63,10 @@ public class IssueSettings {
   public Collection<String> getRecipientsList() {
     final Collection<String> out = Lists.newArrayList();
     for (String email : getRecipients().split(",")) {
-      out.add(email.trim());
+      String recipient = email.trim();
+      if (!recipient.equals("")) {
+        out.add(email.trim());
+      }
     }
     return out;
   }

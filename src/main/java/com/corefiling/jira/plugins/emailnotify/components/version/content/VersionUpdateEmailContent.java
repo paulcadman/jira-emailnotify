@@ -5,10 +5,10 @@ import com.atlassian.jira.project.version.Version;
 import com.corefiling.jira.plugins.emailnotify.change.Change;
 import com.corefiling.jira.plugins.emailnotify.components.version.change.DateVersionChange;
 import com.corefiling.jira.plugins.emailnotify.components.version.change.StringVersionChange;
-import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
 import java.util.Collection;
+import java.util.Date;
 
 /**
  * Created by pwc on 19/05/15.
@@ -37,12 +37,34 @@ public class VersionUpdateEmailContent extends AbstractVersionEmailContent {
       changes.add(new StringVersionChange("Name", getOriginalVersion().getName(), getVersion().getName()));
     }
 
-    if (!getVersion().getStartDate().equals(getOriginalVersion().getStartDate())) {
-      changes.add(new DateVersionChange("Start date", getOriginalVersion().getStartDate(), getVersion().getStartDate()));
+    final Date newStartDate = getVersion().getStartDate();
+    final Date oldStartDate = getOriginalVersion().getStartDate();
+    if (newStartDate == null && oldStartDate != null) {
+      changes.add(new DateVersionChange("Start date", oldStartDate, null));
+    }
+    else if (newStartDate != null && oldStartDate == null) {
+      changes.add(new DateVersionChange("Start date", null, newStartDate));
+    }
+    else if (newStartDate == null) {
+      changes.add(new DateVersionChange("Start date", null, null));
+    }
+    else if (!newStartDate.equals(oldStartDate)) {
+      changes.add(new DateVersionChange("Start date", oldStartDate, newStartDate));
     }
 
-    if (!getVersion().getReleaseDate().equals(getOriginalVersion().getReleaseDate())) {
-      changes.add(new DateVersionChange("Release date", getOriginalVersion().getReleaseDate(), getVersion().getReleaseDate()));
+    final Date newReleaseDate = getVersion().getReleaseDate();
+    final Date oldReleaseDate = getOriginalVersion().getReleaseDate();
+    if (newReleaseDate == null && oldReleaseDate != null) {
+      changes.add(new DateVersionChange("Release date", oldReleaseDate, null));
+    }
+    else if (newReleaseDate != null && oldReleaseDate == null) {
+      changes.add(new DateVersionChange("Release date", null, newReleaseDate));
+    }
+    else if (newReleaseDate == null) {
+      changes.add(new DateVersionChange("Release date", null, null));
+    }
+    else if (!newReleaseDate.equals(oldReleaseDate)) {
+      changes.add(new DateVersionChange("Release date", oldReleaseDate, newReleaseDate));
     }
 
     return changes;
@@ -51,7 +73,18 @@ public class VersionUpdateEmailContent extends AbstractVersionEmailContent {
   private String getVersionChangesString() {
     StringBuilder sb = new StringBuilder();
     for (Change change : getVersionChanges()) {
-      sb.append(String.format("'%s'%s changed from %s to %s\n", change.getFieldName(), Strings.repeat(" ", "Release date".length() - change.getFieldName().length()), change.getFrom(), change.getTo()));
+      if (change.getFrom() == null && change.getTo() == null) {
+        sb.append(String.format("'%s' cleared\n", change.getFieldName()));
+      }
+      else if (change.getFrom() == null) {
+        sb.append(String.format("'%s' changed from unset to %s\n", change.getFieldName(), change.getTo()));
+      }
+      else if (change.getTo() == null) {
+        sb.append(String.format("'%s' changed from %s to unset\n", change.getFieldName(), change.getFrom()));
+      }
+      else {
+        sb.append(String.format("'%s' changed from %s to %s\n", change.getFieldName(), change.getFrom(), change.getTo()));
+      }
     }
     return sb.toString();
   }

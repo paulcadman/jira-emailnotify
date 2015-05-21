@@ -19,6 +19,9 @@ public class DateVersionChange extends AbstractVersionChange {
   }
 
   private String formatDate(final Date date) {
+    if (date == null) {
+      return null;
+    }
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
     df.setTimeZone(TimeZone.getTimeZone("UTC"));
     return df.format(date);
