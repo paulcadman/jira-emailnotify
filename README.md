@@ -1,0 +1,41 @@
+# JIRA emailnotify plugin
+
+This plugin adds email notifications for JIRA events.
+
+## Email notifications of create/update/delete for project versions.
+
+## Email notifications of updates to issues to the user that made the update.
+
+A condition may be specified as a boolean groovy expression in the plugin configuration.
+The JIRA issue object that has been updated (as `issue`) and a `Map` of issue
+field names to changes (as `changes`) are both available in the binding of the
+expression.
+
+For example:
+
+    issue.statusObject.name == "Open" && changes.containsKey("Sprint") and changes["Sprint"].to
+
+Means that the condition is satisfied if the issue is in the "Open" state and
+its "Sprint" field has changed to be non-empty.
+
+Values of the `changes` Map are Objects with two properties `to` and `from` which contain a `String`
+representation of the changes to the field in the update.
+
+## Running in the development environment
+
+Assuming you have the Atlassian SDK installed, run the following in the
+root of a clone:
+
+    $ atlas-run
+
+## Packaging
+Assuming you have the Atlassian SDK installed, run the following in the
+root of a clone:
+
+    $ atlas-package
+
+This creates the plugin artefact in the `target/` directory.
+
+## Licensing
+
+This plugin is made available under the Apache 2.0 licence.
