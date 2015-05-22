@@ -60,7 +60,7 @@
                   </td>
                   <td class="fieldValueArea">
                     <input type="text" style="width:100%" name="updateSubject" value="$updateSubject"/>
-                    <div class="fieldDescription">The template for the email body. The changed issue and changes are available as <code>$issue</code> and <code>$changes</code>. The URL of the issue is available as <code>$issueUrl</code>.</div>
+                    <div class="fieldDescription">The template for the email subject. The changed issue and changes are available as <code>$issue</code> and <code>$changes</code>. The URL of the issue is available as <code>$issueUrl</code>.</div>
                   </td>
                 </tr>
                 <tr>
