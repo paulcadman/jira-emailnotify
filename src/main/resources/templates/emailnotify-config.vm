@@ -48,7 +48,7 @@
                   </td>
                   <td class="fieldValueArea">
                     <input type="text" style="width:100%" name="issueRecipients" value="$updateRecipients"/>
-                    <div class="fieldDescription">A comma delimited list of emails to notify (in addition to the user that updated the issue)</div>
+                    <div class="fieldDescription">A comma delimited list of emails to notify (in addition to the user that updated the issue).</div>
                   </td>
                 </tr>
                 <tr>
@@ -56,11 +56,11 @@
                   <td></td>
                   <td class="fieldValueArea">
                     <textarea name="updateMessage" style="height: 200px; width:100%">$textutils.htmlEncode($updateMessage)</textarea>
-                    <div class="fieldDescription">A groovy expression that should return a <code>GString</code> containing a notification message. The updated <code>issue</code> and <code>changes</code> (a map of changed fieldNames to field value changes) are supplied in the binding.</div>
+                    <div class="fieldDescription">The template for the email body. The changed issue and changes are available as <code>$issue</code> and <code>$changes</code>. The URL of the issue is available as <code>$issueUrl</code>.</div>
                   </td>
                   <td class="fieldValueArea">
                     <input type="text" style="width:100%" name="updateSubject" value="$updateSubject"/>
-                    <div class="fieldDescription">A groovy expression that should return a <code>GString</code> containing an email subject.</div>
+                    <div class="fieldDescription">The template for the email body. The changed issue and changes are available as <code>$issue</code> and <code>$changes</code>. The URL of the issue is available as <code>$issueUrl</code>.</div>
                   </td>
                 </tr>
                 <tr>

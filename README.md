@@ -19,13 +19,22 @@ expression.
 
 For example:
 
-    issue.statusObject.name == "Open" && changes.containsKey("Sprint") and changes["Sprint"].to
+    issue.statusObject.name == "Open" && changes.Sprint?.to
 
 Means that the condition is satisfied if the issue is in the "Open" state and
 its "Sprint" field has changed to be non-empty.
 
 Values of the `changes` Map are Objects with two properties `to` and `from` which contain a `String`
 representation of the changes to the field in the update.
+
+An template for the notification email body and subject should also be supplied. The variables
+`$issue` and `$changes` are available to the template (these are the same as `issue` and `changes`
+for the condition). A variable, `$issueUrl` containing a string representation of the issue URL is also
+available. For example:
+
+    $issue.key has been moved to the sprint: 'changes.Sprint.to'.
+  
+    Please visit $issueUrl for more details.
 
 ## Running in the development environment
 
